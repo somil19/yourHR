@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/css/userProfile.css" />
+    <title>User Profile</title>
+  </head>
+  <body>
+    <nav>
+      <div class="logo"><img src="/images/header.png" alt="Logo" /></div>
+      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/job">Jobs</a></li>
+        <li><a href="/userProfile" class="active">Your Profile</a></li>
+      </ul>
+      <% if (!locals.login) { %>
+      <div class="btn-container">
+        <button class="btn login" onclick="location.href='/login'">
+          Login
+        </button>
+        <button class="btn signup" onclick="location.href='/signUp'">
+          Sign Up
+        </button>
+      </div>
+      <% } else { %>
+      <button onclick="location.href='/logout'" class="btn login">
+        Logout
+      </button>
+      <% } %>
+    </nav>
+    <div id="sidebar" class="sidebar">
+      <button class="close-btn" onclick="toggleSidebar()">✖</button>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/job">Jobs</a></li>
+        <li><a href="/userProfile" class="sidebar-active">Your Profile</a></li>
+      </ul>
+      <% if (!locals.login) { %>
+      <div class="">
+        <button class="btn login" onclick="location.href='/login'">
+          Login
+        </button>
+        <button class="btn signup" onclick="location.href='/signUp'">
+          Sign Up
+        </button>
+      </div>
+      <% } else { %>
+      <button onclick="location.href='/logout'" class="btn login">
+        Logout
+      </button>
+      <% } %>
+    </div>
+
+    <div class="profile-container">
+      <div class="profile-card">
+        <div class="profile-header">
+          <div class="profile-image-wrapper">
+            <% if (user.profileImage) { %>
+            <img
+              src="<%= user.profileImage %>"
+              alt="Profile Picture"
+              class="profile-image"
+            />
+            <% } else { %>
+            <img
+              src="/images/userProfile.jpg"
+              alt="Profile Picture"
+              class="profile-image"
+            />
+            <% } %>
+
+            <div
+              class="change-photo"
+              onclick="document.getElementById('profilePhotoInput').click()"
+            >
+              Change Photo
+            </div>
+
+            <!-- Hidden form for uploading the profile photo -->
+            <form
+              id="uploadPhotoForm"
+              action="/user/uploadProfileImage"
+              method="POST"
+              enctype="multipart/form-data"
+              style="display: none"
+            >
+              <input
+                type="file"
+                name="profilePhoto"
+                id="profilePhotoInput"
+                accept="image/*"
+                onchange="document.getElementById('uploadPhotoForm').submit()"
+              />
+            </form>
+          </div>
+
+          <div class="profile-info">
+            <h2><%= user.fullName %></h2>
+            <p><%= user.email %></p>
+            <div class="skills">
+              <% user.skills.forEach(element => { %>
+              <p><%= element %></p>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-details">
+        <div class="detail-item">
+          <h3>Name</h3>
+          <p><%= user.fullName %></p>
+        </div>
+        <div class="detail-item">
+          <h3>Email</h3>
+          <p><%= user.email %></p>
+        </div>
+        <div class="detail-item">
+          <h3>Phone</h3>
+          <p><%= user.phoneNo %></p>
+        </div>
+        <div class="detail-item">
+          <h3>City</h3>
+          <p><%= user.city %></p>
+        </div>
+        <div class="detail-item">
+          <h3>Education</h3>
+          <p><%= user.education %></p>
+        </div>
+        <div class="detail-item">
+          <h3>College</h3>
+          <p><%= user.college_name %></p>
+        </div>
+        <div class="detail-item">
+          <h3>Your Resume</h3>
+          <% if (user.resume) { %>
+          <a href="<%= user.resume %>" target="_blank">View Resume</a>
+          <% } else { %>
+          <p>No resume uploaded.</p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.classList.toggle("open");
+
+      // Ensure the menu toggle button is hidden when the sidebar is open
+      const menuToggle = document.querySelector(".menu-toggle");
+      menuToggle.style.display = sidebar.classList.contains("open")
+        ? "none"
+        : "block";
+    }
+    function handleResize() {
+      const menuToggle = document.querySelector(".menu-toggle");
+      if (window.innerWidth > 768) {
+        menuToggle.style.display = "none";
+      } else {
+        menuToggle.style.display = "block";
+      }
+    }
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Initial check to set the correct state on page load
+    handleResize();
+  </script>
+</html>

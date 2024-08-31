@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+body {
+  font-family: "Outfit", sans-serif;
+  background-color: #fbfbfb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.signup-container {
+  background-color: #fff;
+  padding: 20px 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 350px;
+}
+
+.brand-logo img {
+  width: 80%;
+}
+
+h2 {
+  font-size: 28px;
+  margin: 23px 0;
+  font-weight: 500;
+}
+
+p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  text-align: left;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+form input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+form input:focus {
+  outline: 1px solid #967ef8;
+}
+.signup-button {
+  background-color: #0e5ddd;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.signup-button:hover {
+  background-color: #333;
+}
+
+.terms {
+  font-size: 12px;
+  color: #888;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.terms a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-prompt {
+  font-size: 14px;
+}
+
+.login-prompt a {
+  color: #007bff;
+  text-decoration: none;
+}

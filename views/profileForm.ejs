@@ -1,0 +1,137 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Form</title>
+    <link rel="stylesheet" href="/css/profileForm.css" />
+  </head>
+  <body>
+    <div class="header">
+      <img src="/images/header.png" alt="Company Logo" class="logo" />
+      <div class="welcome-text">
+        <h1>
+          <% if (user.city) { %>
+            Update
+           <%  } else { %> Welcome to  
+           <% } %>
+           Your Profile Setup</h1>
+        <p>
+          Let's get started by filling in your details to 
+          <% if (user.city) { %>
+           Update
+          <%  } else { %> Create 
+          <% } %>
+          your profile.
+        </p>
+      </div>
+    </div>
+    <button class="btn-back" onclick="location.href='/'">← Back</button>
+
+    <div class="container">
+      <h2><% if (user.city) { %>
+        Update
+       <%  } else { %> Create  
+       <% } %> Your Profile</h2>
+      <form action="/user/createProfile" id="profile-form" method="post" enctype="multipart/form-data">
+        <!-- Name and City -->
+        <div class="form-row">
+          <div>
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="John Doe"
+              value="<%= user.fullName || '' %>" 
+            />
+          </div>
+          <div>
+            <label for="city">City</label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              placeholder="New York"
+              value="<%= user.city || '' %>" 
+              required
+            />
+          </div>
+        </div>
+        <!-- College Name and Education -->
+        <div class="form-row">
+          <div>
+            <label for="college">College Name</label>
+            <input
+              type="text"
+              id="college"
+              name="college_name"
+              placeholder="XYZ University"
+              value="<%= user.college_name || '' %>" 
+              required
+            />
+          </div>
+          <div>
+            <label for="education">Education</label>
+            <select id="education" name="education" required>
+              <option value="bachelor's" <%= user.education === "bachelor's" ? 'selected' : '' %>>Bachelor's Degree</option>
+              <option value="master's" <%= user.education === "master's" ? 'selected' : '' %>>Master's Degree</option>
+              <option value="phd" <%= user.education === "phd" ? 'selected' : '' %>>PhD</option>
+              <option value="associate's" <%= user.education === "associate's" ? 'selected' : '' %>>Associate's Degree</option>
+            </select>
+          </div>
+        </div>
+        <!-- Email and Phone Number -->
+        <div class="form-row">
+          <div>
+            <label for="email">Email</label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              placeholder="example@example.com"
+              value="<%= user.email || '' %>" 
+            />
+          </div>
+          <div>
+            <label for="phoneNo">Phone Number</label>
+            <input
+              type="text"
+              id="phoneNo"
+              name="phoneNo"
+              placeholder="123-456-7890"
+              value="<%= user.phoneNo || '' %>" 
+              required
+            />
+          </div>
+        </div>
+        <!-- Skills and Upload Resume -->
+        <div class="form-row">
+          <div>
+            <label for="skills">Skills</label>
+            <input
+              type="text"
+              id="skills"
+              name="skills"
+              placeholder="EX: HTML, CSS, Javascript"
+              value="<%= user.skills.join(', ') || '' %>"
+            />
+          </div>
+          <div>
+            <label for="resume">Upload Resume</label>
+            
+            <input type="file" id="resume" name="resume" required />
+            <% if (user.resume) { %>
+              <p>Current Resume: <a href="<%= user.resume %>" target="_blank" rel="noopener noreferrer">View Resume</a></p>
+            <% } %>
+          </div>
+        </div>
+        <div class="submit-btn">
+          <input id="profile-form" type="submit" value="<%= user.city ? 'Update' : 'Submit' %>" />
+        </div>
+
+        
+      </form>
+      
+    </div>
+  </body>
+</html>

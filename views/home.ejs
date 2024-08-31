@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YourHR</title>
+    <link rel="stylesheet" href="/css/home.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav>
+      <div class="logo"><img src="/images/header.png" alt="Logo" /></div>
+      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+      <ul class="nav-links">
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="/job">Jobs</a></li>
+        <li><a href="/userProfile">Your Profile</a></li>
+      </ul>
+      <% if (!locals.login) { %>
+      <div class="btn-container">
+        <button class="btn login" onclick="location.href='/login'">
+          Login
+        </button>
+        <button class="btn signup" onclick="location.href='/signUp'">
+          Sign Up
+        </button>
+      </div>
+      <% } else { %>
+      <button onclick="location.href='/logout'" class="btn login">
+        Logout
+      </button>
+      <% } %>
+    </nav>
+    <div id="sidebar" class="sidebar">
+      <button class="close-btn" onclick="toggleSidebar()">✖</button>
+      <ul>
+        <li><a href="/" class="sidebar-active">Home</a></li>
+        <li><a href="/job">Jobs</a></li>
+        <li><a href="/userProfile">Your Profile</a></li>
+      </ul>
+      <% if (!locals.login) { %>
+      <div class="">
+        <button class="btn login" onclick="location.href='/login'">
+          Login
+        </button>
+        <button class="btn signup" onclick="location.href='/signUp'">
+          Sign Up
+        </button>
+      </div>
+      <% } else { %>
+      <button onclick="location.href='/logout'" class="btn login">
+        Logout
+      </button>
+      <% } %>
+    </div>
+    <!-- Main Content -->
+    <section class="hero">
+      <h1>Find the job made for you.</h1>
+      <p>
+        We make it easy to find what's next. Browse opportunities that match
+        your skills and aspirations.
+      </p>
+      <div class="btn">
+        <button onclick="location.href='/createProfile'">
+          <% if (user && user.city) { %> Update <% } else { %> Create <% } %>
+          your profile
+        </button>
+      </div>
+    </section>
+  </body>
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.classList.toggle("open");
+
+      const menuToggle = document.querySelector(".menu-toggle");
+      menuToggle.style.display = sidebar.classList.contains("open")
+        ? "none"
+        : "block";
+    }
+    function handleResize() {
+      const menuToggle = document.querySelector(".menu-toggle");
+      if (window.innerWidth > 768) {
+        menuToggle.style.display = "none";
+      } else {
+        menuToggle.style.display = "block";
+      }
+    }
+    // Adding event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+  </script>
+</html>

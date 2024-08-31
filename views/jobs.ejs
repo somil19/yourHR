@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Section</title>
+    <link rel="stylesheet" href="/css/job.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <div class="logo"><img src="/images/header.png" alt="Logo" /></div>
+      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/job" class="active">Jobs</a></li>
+        <li><a href="/userProfile">Your Profile</a></li>
+      </ul>
+      <% if (!locals.login) { %>
+      <div class="btn-container">
+        <button class="btn login" onclick="location.href='/login'">
+          Login
+        </button>
+        <button class="btn signup" onclick="location.href='/signUp'">
+          Sign Up
+        </button>
+      </div>
+      <% } else { %>
+      <button onclick="location.href='/logout'" class="btn login">
+        Logout
+      </button>
+      <% } %>
+    </nav>
+    <div id="sidebar" class="sidebar">
+      <button class="close-btn" onclick="toggleSidebar()">✖</button>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/job" class="sidebar-active">Jobs</a></li>
+        <li><a href="/userProfile" class="active">Your Profile</a></li>
+      </ul>
+      <% if (!locals.login) { %>
+      <div class="">
+        <button class="btn login" onclick="location.href='/login'">
+          Login
+        </button>
+        <button class="btn signup" onclick="location.href='/signUp'">
+          Sign Up
+        </button>
+      </div>
+      <% } else { %>
+      <button onclick="location.href='/logout'" class="btn login">
+        Logout
+      </button>
+      <% } %>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+      <section id="jobs">
+        <h1>Available Jobs</h1>
+        <div class="job-list">
+          <div class="job-item">
+            <h2>Frontend Developer</h2>
+            <p>Company: Tech Corp</p>
+            <p>Location: Remote</p>
+            <a href="#" class="apply-btn">Apply Now</a>
+          </div>
+          <div class="job-item">
+            <h2>Backend Developer</h2>
+            <p>Company: Dev Solutions</p>
+            <p>Location: New York</p>
+            <a href="#" class="apply-btn">Apply Now</a>
+          </div>
+          <div class="job-item">
+            <h2>Full Stack Developer</h2>
+            <p>Company: Code Factory</p>
+            <p>Location: San Francisco</p>
+            <a href="#" class="apply-btn">Apply Now</a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.classList.toggle("open");
+
+      // Ensure the menu toggle button is hidden when the sidebar is open
+      const menuToggle = document.querySelector(".menu-toggle");
+      menuToggle.style.display = sidebar.classList.contains("open")
+        ? "none"
+        : "block";
+    }
+    function handleResize() {
+      const menuToggle = document.querySelector(".menu-toggle");
+      if (window.innerWidth > 768) {
+        menuToggle.style.display = "none";
+      } else {
+        menuToggle.style.display = "block";
+      }
+    }
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Initial check to set the correct state on page load
+    handleResize();
+  </script>
+</html>
